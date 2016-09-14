@@ -102,13 +102,29 @@ const client = vimeoProvider.createClient({
 ### Client Methods
 All methods return a Promise.
 
-- `client.getAlbums()`
+- `client.getAlbums()` - [developer.vimeo.com/api/endpoints/me#/albums](https://developer.vimeo.com/api/endpoints/me#/albums)
 - `client.getAlbum({albumUri})`
 - `client.getVideosByAlbum({albumUri})`
-- `client.getVideos()`
+- `client.getVideos()` - [developer.vimeo.com/api/endpoints/me#/videos](https://developer.vimeo.com/api/endpoints/me#/videos)
 - `client.getVideo({videoUri})`
 - `client.getVideoConfig({videoUri})`
 
+### Query Strings
+
+All methods support query strings. Simply provide the `{query}` key a hash of the query strings to use. This is handy for certain endpoints like list endpoints.
+
+List endpoints such as `client.getAlbums()`, `client.getVideosByAlbum({albumUri})`, or `client.getVideos()` are pageable. The max number of items per-page is `50`. If your account contains more than 50 videos or albums, or your album contains more than 50 videos, you will need to pass `query` params in order to fetch the rest of your data.
+
+Example:
+
+```JavaScript
+const query = {
+  page: 2,
+  per_page: 10
+};
+
+client.getAlbums({query})
+```
 
 Command Line Interface
 ----------------------
