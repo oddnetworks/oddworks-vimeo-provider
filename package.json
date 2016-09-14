@@ -4,7 +4,7 @@
   "description": "An Oddworks provider plugin for Vimeo APIs",
   "main": "index.js",
   "scripts": {
-    "test": "xo && jasmine"
+    "test": "xo && ava"
   },
   "repository": {
     "type": "git",
@@ -34,5 +34,21 @@
     "boom": "^4.0.0",
     "request": "^2.74.0",
     "yargs": "^5.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "nock": "^8.0.0",
+    "oddcast": "^2.1.0",
+    "sinon": "^1.17.5",
+    "xo": "^0.16.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*-test.js"
+    ],
+    "source": [
+      "lib/**/*",
+      "index.js"
+    ]
   }
 }
