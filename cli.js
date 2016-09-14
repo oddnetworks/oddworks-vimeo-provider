@@ -13,7 +13,46 @@ REQUEST_METHODS.getVideos = '{}';
 REQUEST_METHODS.getVideo = '{"videoId": "STRING"}';
 REQUEST_METHODS.getVideoConfig = '{"videoId": "STRING"}';
 
-exports.main = function () {
+const listCommand = () => {
+	console.log('Request methods:');
+	console.log('');
+
+	Object.getOwnPropertyNames(Client.prototype).forEach(key => {
+		if (REQUEST_METHODS[key]) {
+			console.log(`\t${key} --args ${REQUEST_METHODS[key]}`);
+		}
+	});
+
+	return Promise.resolve(null);
+};
+
+const requestCommand = args => {
+	const accessToken = args.accessToken;
+	const method = args.method;
+
+	if (!accessToken) {
+		console.error('An accessToken is required (--accessToken)');
+		return Promise.resolve(null);
+	}
+
+	let params;
+	try {
+		params = JSON.parse(args.args);
+	} catch (err) {
+		console.error('--args JSON parsing error:');
+		console.error(err.message);
+		return Promise.resolve(null);
+	}
+
+	const client = new Client({accessToken});
+
+	return client[method](params).then(res => {
+		console.log(JSON.stringify(res));
+		return null;
+	});
+};
+
+exports.main = () => {
 	const args = yargs
 					.usage('Usage: $0 <command> [options]')
 					.command('req', 'Make a vimeo client request', {
@@ -35,10 +74,9 @@ exports.main = function () {
 					.help();
 
 	const argv = args.argv;
-
 	const command = argv._[0];
 
-	switch(command) {
+	switch (command) {
 		case 'list':
 			return listCommand();
 		case 'req':
@@ -53,42 +91,3 @@ exports.main = function () {
 			return Promise.resolve(null);
 	}
 };
-
-function listCommand() {
-	console.log('Request methods:');
-	console.log('');
-
-	Object.getOwnPropertyNames(Client.prototype).forEach(key => {
-		if (REQUEST_METHODS[key]) {
-			console.log(`\t${key} --args ${REQUEST_METHODS[key]}`);
-		}
-	});
-
-	return Promise.resolve(null);
-}
-
-function requestCommand(args) {
-	const accessToken = args.accessToken;
-	const method = args.method;
-
-	if (!accessToken) {
-		console.error('An accessToken is required (--accessToken)');
-		return Promise.resolve(null);
-	}
-
-	let params;
-	try {
-		params = JSON.parse(args.args);
-	} catch (err) {
-		console.error('--args JSON parsing error:');
-		console.error(err.message);
-		return Promise.resolve(null);
-	}
-
-	const client = new Client({ accessToken });
-
-	return client[method](params).then(res => {
-		console.log(JSON.stringify(res));
-		return null;
-	});
-}
