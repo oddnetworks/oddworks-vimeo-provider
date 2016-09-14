@@ -7,11 +7,11 @@ const Client = require('./lib/client');
 const REQUEST_METHODS = Object.create(null);
 REQUEST_METHODS.makeRequest = '{"path": "STRING"}';
 REQUEST_METHODS.getAlbums = '{}';
-REQUEST_METHODS.getAlbum = '{"albumId": "STRING"}';
-REQUEST_METHODS.getVideosByAlbum = '{"albumId": "STRING"}';
+REQUEST_METHODS.getAlbum = '{"albumUri": "STRING"}';
+REQUEST_METHODS.getVideosByAlbum = '{"albumUri": "STRING"}';
 REQUEST_METHODS.getVideos = '{}';
-REQUEST_METHODS.getVideo = '{"videoId": "STRING"}';
-REQUEST_METHODS.getVideoConfig = '{"videoId": "STRING"}';
+REQUEST_METHODS.getVideo = '{"videoUri": "STRING"}';
+REQUEST_METHODS.getVideoConfig = '{"videoUri": "STRING"}';
 
 const listCommand = () => {
 	console.log('Request methods:');

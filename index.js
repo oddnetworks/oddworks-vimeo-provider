@@ -13,14 +13,6 @@ const DEFAULTS = {
 	videoTransform: defaultVideoTransform
 };
 
-const fetchId = uri => {
-	if (!uri || typeof uri !== 'string') {
-		return null;
-	}
-
-	return uri.split('/').pop();
-};
-
 // options.bus
 // options.accessToken
 // options.collectionTransform
@@ -69,10 +61,10 @@ exports.createAlbumHandler = (bus, getChannel, client, transform) => {
 	return args => {
 		const spec = args.spec;
 		const album = spec.album || {};
-		const albumId = fetchId(album.uri);
+		const albumUri = album.uri;
 		const channelId = spec.channel;
 
-		if (!albumId || typeof albumId !== 'string') {
+		if (!albumUri || typeof albumUri !== 'string') {
 			throw new Error(
 				'vimeo-album-provider spec.album.uri String is required'
 			);
@@ -81,7 +73,7 @@ exports.createAlbumHandler = (bus, getChannel, client, transform) => {
 		const collection = args.object;
 
 		return getChannel(channelId).then(channel => {
-			return getCollection({spec, channel, collection, albumId});
+			return getCollection({spec, channel, collection, albumUri});
 		});
 	};
 };
@@ -96,16 +88,16 @@ exports.createVideoHandler = (bus, getChannel, client, transform) => {
 		const spec = args.spec;
 		const channelId = spec.channel;
 		const video = spec.video || {};
-		const videoId = fetchId(video.uri);
+		const videoUri = video.uri;
 
-		if (!videoId || typeof videoId !== 'string') {
+		if (!videoUri || typeof videoUri !== 'string') {
 			throw new Error(
 				'vimeo-video-provider spec.video.uri String is required'
 			);
 		}
 
 		return getChannel(channelId).then(channel => {
-			return getVideo({spec, channel, videoId});
+			return getVideo({spec, channel, videoUri});
 		});
 	};
 };

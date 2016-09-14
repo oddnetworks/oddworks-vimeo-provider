@@ -57,7 +57,7 @@ test('when Vimeo album not found', t => {
 		});
 	});
 
-	t.throws(albumHandler({spec}), 'Album not found for id "12345"');
+	t.throws(albumHandler({spec}), `Album not found for uri "${spec.album.uri}"`);
 
 	return obs.then(event => {
 		t.deepEqual(event.error, {code: 'ALBUM_NOT_FOUND'});

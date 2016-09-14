@@ -57,7 +57,7 @@ test('when Vimeo video not found', t => {
 		});
 	});
 
-	t.throws(videoHandler({spec}), `Video not found for id "12345"`);
+	t.throws(videoHandler({spec}), `Video not found for uri "${spec.video.uri}"`);
 
 	return obs.then(event => {
 		t.deepEqual(event.error, {code: 'VIDEO_NOT_FOUND'});
