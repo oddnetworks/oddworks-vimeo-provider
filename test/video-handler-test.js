@@ -41,8 +41,6 @@ test.beforeEach(() => {
 	const client = provider.createClient({accessToken: 'foo'});
 
 	videoHandler = provider.createVideoHandler(bus, getChannel, client, videoTransform);
-
-	return Promise.resolve(true);
 });
 
 test('when Vimeo video not found', t => {
@@ -62,23 +60,42 @@ test('when Vimeo video not found', t => {
 	t.throws(videoHandler({spec}), `Video not found for id "12345"`);
 
 	return obs.then(event => {
+		t.deepEqual(event.error, {code: 'VIDEO_NOT_FOUND'});
 		t.is(event.code, 'VIDEO_NOT_FOUND');
 		t.deepEqual(event.spec, spec);
 		t.is(event.message, 'video not found');
 	});
 });
 
-test.skip('when Vimeo video found', t => {
+test('when Vimeo video found', t => {
 	const spec = {
 		channel: 'abc',
 		type: 'videoSpec',
-		id: 'spec-vimeo-/videos/110484775',
-		video: {uri: '/videos/110484775'}
+		id: `spec-vimeo-${videoResponse.uri}`,
+		video: {uri: videoResponse.uri}
 	};
 
 	return videoHandler({spec})
 		.then(res => {
-			console.log(JSON.stringify(res, null, 4));
-			t.is(res.id, spec.id);
+			t.deepEqual(Object.keys(res), [
+				'id',
+				'type',
+				'title',
+				'description',
+				'images',
+				'sources',
+				'duration',
+				'releaseDate'
+			]);
+			t.is(res.id, `res-vimeo-${videoResponse.uri}`);
+			t.is(res.type, 'video');
+			t.is(res.title, videoResponse.name);
+			t.is(res.description, videoResponse.description);
+			t.is(res.images.length, videoResponse.pictures.sizes.length);
+			t.is(res.images[0].url, videoResponse.pictures.sizes[0].link);
+			t.is(res.sources.length, 3);
+			t.is(res.sources[0].url, videoConfigResponse.request.files.hls.url);
+			t.is(res.duration, 1000 * videoResponse.duration);
+			t.is(res.releaseDate, (new Date(videoResponse.release_time)).toISOString());
 		});
 });
