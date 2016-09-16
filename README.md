@@ -113,17 +113,22 @@ All methods return a Promise.
 
 All methods support query strings. Simply provide the `{query}` key a hash of the query strings to use. This is handy for certain endpoints like list endpoints.
 
-List endpoints such as `client.getAlbums()`, `client.getVideosByAlbum({albumUri})`, or `client.getVideos()` are pageable. The max number of items per-page is `50`. If your account contains more than 50 videos or albums, or your album contains more than 50 videos, you will need to pass `query` params in order to fetch the rest of your data.
+List endpoints such as `client.getAlbums()`, `client.getVideosByAlbum({albumUri})`, or `client.getVideos()` are pageable. The default number of items per page is `25` and the max number of items per-page is `50`. If your account contains more than 25 videos or albums, or your album contains more than 25 videos, you will need to pass `query` params in order to fetch the rest of your data.
 
 Example:
 
 ```JavaScript
+const albumId = '12345';
 const query = {
   page: 2,
-  per_page: 10
+  per_page: 25
 };
 
-client.getAlbums({query})
+client
+  .getVideosByAlbum({albumId, query})
+  .then(res => {
+    console.log(JSON.stringify(res, null, 2));
+  });
 ```
 
 Command Line Interface

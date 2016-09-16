@@ -7,7 +7,10 @@ const Promise = require('bluebird');
 const provider = require('../');
 const albumTransform = require('../lib/default-collection-transform');
 const albumResponse = require('./fixtures/album-response');
+const albumResponseLarge = require('./fixtures/album-response-large');
 const videosByAlbumResponse = require('./fixtures/videos-by-album-response');
+const videosByAlbumResponsePage1 = require('./fixtures/videos-by-album-response-page-1');
+const videosByAlbumResponsePage2 = require('./fixtures/videos-by-album-response-page-2');
 const helpers = require('./helpers');
 
 const getChannel = () => {
@@ -29,6 +32,18 @@ test.before(() => {
 	nock('https://api.vimeo.com')
 		.get('/me/albums/12345')
 		.reply(404);
+
+	nock('https://api.vimeo.com')
+		.get('/me/albums/3333333')
+		.reply(200, albumResponseLarge);
+
+	nock('https://api.vimeo.com')
+		.get('/me/albums/3333333/videos?page=1')
+		.reply(200, videosByAlbumResponsePage1);
+
+	nock('https://api.vimeo.com')
+		.get('/me/albums/3333333/videos?page=2')
+		.reply(200, videosByAlbumResponsePage2);
 });
 
 test.beforeEach(() => {
@@ -93,5 +108,33 @@ test('when Vimeo album found', t => {
 			t.is(res.images[0].url, albumResponse.pictures.sizes[0].link);
 			t.is(res.relationships.entities.data.length, videosByAlbumResponse.data.length);
 			t.is(res.relationships.entities.data[0].id, `res-vimeo-${videosByAlbumResponse.data[0].uri}`);
+		});
+});
+
+test('when Vimeo album with > 25 videos found', t => {
+	const spec = {
+		channel: 'abc',
+		type: 'collectionSpec',
+		id: `spec-vimeo-${albumResponseLarge.uri}`,
+		album: {uri: albumResponseLarge.uri}
+	};
+
+	return albumHandler({spec})
+		.then(res => {
+			t.deepEqual(Object.keys(res), [
+				'id',
+				'type',
+				'title',
+				'description',
+				'images',
+				'relationships'
+			]);
+			t.is(res.id, `res-vimeo-${albumResponseLarge.uri}`);
+			t.is(res.type, 'collection');
+			t.is(res.title, albumResponseLarge.name);
+			t.is(res.description, albumResponseLarge.description);
+			t.is(res.images.length, 0);
+			t.is(res.relationships.entities.data.length, (videosByAlbumResponsePage1.data.length + videosByAlbumResponsePage2.data.length));
+			t.is(res.relationships.entities.data[39].id, `res-vimeo-${videosByAlbumResponsePage2.data[14].uri}`);
 		});
 });

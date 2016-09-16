@@ -1,0 +1,198 @@
+{
+  "uri": "/users/12301230/albums/3333333",
+  "name": "Large Album Numero Uno",
+  "description": "An example of an album with more than twenty five videos contained within.",
+  "link": "https://vimeo.com/album/3333333",
+  "duration": 0,
+  "created_time": "2016-06-09T17:37:15+00:00",
+  "modified_time": "2016-06-09T17:38:14+00:00",
+  "user": {
+    "uri": "/users/12301230",
+    "name": "TellyTelly",
+    "link": "https://vimeo.com/tellytelly",
+    "location": null,
+    "bio": null,
+    "created_time": "2016-04-12T21:53:09+00:00",
+    "account": "pro",
+    "pictures": {
+      "uri": "/users/12301230/pictures/12720554",
+      "active": true,
+      "type": "custom",
+      "sizes": [
+        {
+          "width": 30,
+          "height": 30,
+          "link": "https://i.vimeocdn.com/portrait/12312312_30x30?r=pad"
+        },
+        {
+          "width": 75,
+          "height": 75,
+          "link": "https://i.vimeocdn.com/portrait/12312312_75x75?r=pad"
+        },
+        {
+          "width": 100,
+          "height": 100,
+          "link": "https://i.vimeocdn.com/portrait/12312312_100x100?r=pad"
+        },
+        {
+          "width": 300,
+          "height": 300,
+          "link": "https://i.vimeocdn.com/portrait/12312312_300x300?r=pad"
+        }
+      ],
+      "resource_key": "10485635d9cfb45b943518344d3bb4c0408c7d41"
+    },
+    "websites": [],
+    "metadata": {
+      "connections": {
+        "activities": {
+          "uri": "/users/12301230/activities",
+          "options": [
+            "GET"
+          ]
+        },
+        "albums": {
+          "uri": "/users/12301230/albums",
+          "options": [
+            "GET"
+          ],
+          "total": 122
+        },
+        "appearances": {
+          "uri": "/users/12301230/appearances",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "categories": {
+          "uri": "/users/12301230/categories",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "channels": {
+          "uri": "/users/12301230/channels",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "feed": {
+          "uri": "/users/12301230/feed",
+          "options": [
+            "GET"
+          ]
+        },
+        "followers": {
+          "uri": "/users/12301230/followers",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "following": {
+          "uri": "/users/12301230/following",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "groups": {
+          "uri": "/users/12301230/groups",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "likes": {
+          "uri": "/users/12301230/likes",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "moderated_channels": {
+          "uri": "/users/12301230/channels?filter=moderated",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "portfolios": {
+          "uri": "/users/12301230/portfolios",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "videos": {
+          "uri": "/users/12301230/videos",
+          "options": [
+            "GET"
+          ],
+          "total": 1714
+        },
+        "watchlater": {
+          "uri": "/users/12301230/watchlater",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "shared": {
+          "uri": "/users/12301230/shared/videos",
+          "options": [
+            "GET"
+          ],
+          "total": 0
+        },
+        "pictures": {
+          "uri": "/users/12301230/pictures",
+          "options": [
+            "GET",
+            "POST"
+          ],
+          "total": 1
+        },
+        "watched_videos": {
+          "uri": "/me/watched/videos",
+          "options": [
+            "GET"
+          ],
+          "total": 60
+        }
+      }
+    },
+    "preferences": {
+      "videos": {
+        "privacy": "nobody"
+      }
+    },
+    "content_filter": [
+      "language",
+      "drugs",
+      "violence",
+      "nudity",
+      "safe",
+      "unrated"
+    ],
+    "resource_key": "539ff6569f7519ca15ac36850c6c42ec9d3a97fe"
+  },
+  "privacy": {
+    "view": "anybody"
+  },
+  "pictures": null,
+  "metadata": {
+    "connections": {
+      "videos": {
+        "uri": "/albums/3333333/videos",
+        "options": [
+          "GET"
+        ],
+        "total": 40
+      }
+    }
+  }
+}
