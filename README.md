@@ -1,6 +1,6 @@
 # Oddworks Vimeo Provider
 
-An Vimeo provider plugin for the Oddworks content server.
+A Vimeo provider plugin for the Oddworks content server.
 
 Installation
 ------------
