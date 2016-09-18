@@ -47,7 +47,7 @@ const requestCommand = args => {
 	const client = new Client({accessToken});
 
 	return client[method](params).then(res => {
-		console.log(JSON.stringify(res));
+		console.log(JSON.stringify(res, null, 2));
 		return null;
 	});
 };
