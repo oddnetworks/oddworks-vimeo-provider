@@ -22,11 +22,11 @@ let albumHandler = null;
 
 test.before(() => {
 	nock('https://api.vimeo.com')
-		.get('/me/albums/3078903')
+		.get('/me/albums/4148058')
 		.reply(200, albumResponse);
 
 	nock('https://api.vimeo.com')
-		.get('/me/albums/3078903/videos')
+		.get('/me/albums/4148058/videos')
 		.reply(200, videosByAlbumResponse);
 
 	nock('https://api.vimeo.com')
