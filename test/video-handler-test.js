@@ -78,7 +78,6 @@ test('when Vimeo video found', t => {
 
 			t.deepEqual(Object.keys(res), [
 				'id',
-				'type',
 				'title',
 				'description',
 				'images',
@@ -87,7 +86,6 @@ test('when Vimeo video found', t => {
 				'releaseDate'
 			]);
 			t.is(res.id, `res-vimeo-${videoResponse.uri}`);
-			t.is(res.type, 'video');
 			t.is(res.title, videoResponse.name);
 			t.is(res.description, videoResponse.description);
 			t.is(res.images.length, videoResponse.pictures.sizes.length);
