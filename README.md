@@ -80,9 +80,7 @@ vimeoProvider.initialize(options).then(provider => {
 
 Your transform functions `myCollectionTransform` and `myVideoTransform` will be called when the `vimeo-collection` and `vimeo-video` have respectively received a response from the Vimeo API.
 
-The `myCollectionTransform` function will be called with 2 arguments: The spec object and the Vimeo API response object for an album.
-
-The `myVideoTransform` function will be called with 3 arguments: The spec object, the Vimeo API response object for a video, and the Vimeo Player API object for a video's config.
+The `myCollectionTransform` and `myVideoTransform` functions will each be called with 2 arguments: The spec object and the Vimeo API response object for an album or video, respectively.
 
 See `lib/default-collection-transform` and `lib/default-video-transform` for more info.
 
@@ -107,7 +105,6 @@ All methods return a Promise.
 - `client.getVideosByAlbum({albumUri})`
 - `client.getVideos()` - [developer.vimeo.com/api/endpoints/me#/videos](https://developer.vimeo.com/api/endpoints/me#/videos)
 - `client.getVideo({videoUri})`
-- `client.getVideoConfig({videoUri})`
 
 ### Query Strings
 
