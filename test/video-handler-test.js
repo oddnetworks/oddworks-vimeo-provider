@@ -7,6 +7,7 @@ const Promise = require('bluebird');
 const provider = require('../');
 const videoTransform = require('../lib/default-video-transform');
 const videoResponse = require('./fixtures/video-response');
+const nonProVideoResponse = require('./fixtures/non-pro-video-response');
 const helpers = require('./helpers');
 
 const getChannel = () => {
@@ -25,9 +26,9 @@ test.before(() => {
 		.get('/me/videos/12345')
 		.reply(404);
 
-	nock('https://player.vimeo.com')
-		.get('/video/12345/config')
-		.reply(404);
+	nock('https://api.vimeo.com')
+		.get('/me/videos/108591077')
+		.reply(200, nonProVideoResponse);
 });
 
 test.beforeEach(() => {
@@ -113,4 +114,28 @@ test('when Vimeo video found', t => {
 			t.is(res.duration, 1000 * videoResponse.duration);
 			t.is(res.releaseDate, (new Date(videoResponse.release_time)).toISOString());
 		});
+});
+
+test('when video found from non pro/business account', t => {
+	const spec = {
+		channel: 'abc',
+		type: 'videoSpec',
+		id: `spec-vimeo-${nonProVideoResponse.uri}`,
+		video: {uri: nonProVideoResponse.uri}
+	};
+
+	const obs = new Promise(resolve => {
+		bus.observe({level: 'error'}, payload => {
+			resolve(payload);
+		});
+	});
+
+	t.throws(videoHandler({spec}), 'Not a Vimeo Pro or Business account');
+
+	return obs.then(event => {
+		t.deepEqual(event.error, {code: 'ACCOUNT_NOT_VALID'});
+		t.is(event.code, 'ACCOUNT_NOT_VALID');
+		t.deepEqual(event.spec, spec);
+		t.is(event.message, 'account not valid');
+	});
 });

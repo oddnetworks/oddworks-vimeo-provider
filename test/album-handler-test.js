@@ -11,6 +11,8 @@ const albumResponseLarge = require('./fixtures/album-response-large');
 const videosByAlbumResponse = require('./fixtures/videos-by-album-response');
 const videosByAlbumResponsePage1 = require('./fixtures/videos-by-album-response-page-1');
 const videosByAlbumResponsePage2 = require('./fixtures/videos-by-album-response-page-2');
+const nonProAlbumResponse = require('./fixtures/non-pro-album-response');
+const nonProVideosByAlbumResponse = require('./fixtures/non-pro-videos-by-album-response');
 const helpers = require('./helpers');
 
 const getChannel = () => {
@@ -44,6 +46,14 @@ test.before(() => {
 	nock('https://api.vimeo.com')
 		.get('/me/albums/3333333/videos?page=2')
 		.reply(200, videosByAlbumResponsePage2);
+
+	nock('https://api.vimeo.com')
+		.get('/me/albums/3078903')
+		.reply(200, nonProAlbumResponse);
+
+	nock('https://api.vimeo.com')
+		.get('/me/albums/3078903/videos')
+		.reply(200, nonProVideosByAlbumResponse);
 });
 
 test.beforeEach(() => {
@@ -56,6 +66,12 @@ test.beforeEach(() => {
 	const client = provider.createClient({accessToken: 'foo'});
 
 	albumHandler = provider.createAlbumHandler(bus, getChannel, client, albumTransform);
+});
+
+test.afterEach(() => {
+	/* eslint-disable no-debugger */
+	debugger;
+	/* eslint-enable no-debugger */
 });
 
 test('when Vimeo album not found', t => {
@@ -137,4 +153,15 @@ test('when Vimeo album with > 25 videos found', t => {
 			t.is(res.relationships.entities.data.length, (videosByAlbumResponsePage1.data.length + videosByAlbumResponsePage2.data.length));
 			t.is(res.relationships.entities.data[39].id, `res-vimeo-${videosByAlbumResponsePage2.data[14].uri}`);
 		});
+});
+
+test('when Vimeo album from non-Pro/Business account found', t => {
+	const spec = {
+		channel: 'abc',
+		type: 'collectionSpec',
+		id: `spec-vimeo-${nonProAlbumResponse.uri}`,
+		album: {uri: nonProAlbumResponse.uri}
+	};
+
+	t.notThrows(albumHandler({spec}));
 });
