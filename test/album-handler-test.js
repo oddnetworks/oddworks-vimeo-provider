@@ -94,14 +94,12 @@ test('when Vimeo album found', t => {
 		.then(res => {
 			t.deepEqual(Object.keys(res), [
 				'id',
-				'type',
 				'title',
 				'description',
 				'images',
 				'relationships'
 			]);
 			t.is(res.id, `res-vimeo-${albumResponse.uri}`);
-			t.is(res.type, 'collection');
 			t.is(res.title, albumResponse.name);
 			t.is(res.description, albumResponse.description);
 			t.is(res.images.length, albumResponse.pictures.sizes.length);
@@ -123,14 +121,12 @@ test('when Vimeo album with > 25 videos found', t => {
 		.then(res => {
 			t.deepEqual(Object.keys(res), [
 				'id',
-				'type',
 				'title',
 				'description',
 				'images',
 				'relationships'
 			]);
 			t.is(res.id, `res-vimeo-${albumResponseLarge.uri}`);
-			t.is(res.type, 'collection');
 			t.is(res.title, albumResponseLarge.name);
 			t.is(res.description, albumResponseLarge.description);
 			t.is(res.images.length, 0);
