@@ -7,7 +7,7 @@ const Promise = require('bluebird');
 const provider = require('../');
 const videoTransform = require('../lib/default-video-transform');
 const videoResponse = require('./fixtures/video-response');
-const videoConfigResponse = require('./fixtures/video-config-response');
+const nonProVideoResponse = require('./fixtures/non-pro-video-response');
 const helpers = require('./helpers');
 
 const getChannel = () => {
@@ -19,20 +19,16 @@ let videoHandler = null;
 
 test.before(() => {
 	nock('https://api.vimeo.com')
-		.get('/me/videos/110484775')
+		.get('/me/videos/166971134')
 		.reply(200, videoResponse);
-
-	nock('https://player.vimeo.com')
-		.get('/video/110484775/config')
-		.reply(200, videoConfigResponse);
 
 	nock('https://api.vimeo.com')
 		.get('/me/videos/12345')
 		.reply(404);
 
-	nock('https://player.vimeo.com')
-		.get('/video/12345/config')
-		.reply(404);
+	nock('https://api.vimeo.com')
+		.get('/me/videos/108591077')
+		.reply(200, nonProVideoResponse);
 });
 
 test.beforeEach(() => {
@@ -77,6 +73,9 @@ test('when Vimeo video found', t => {
 
 	return videoHandler({spec})
 		.then(res => {
+			const source1 = res.sources[0];
+			const source4 = res.sources[3];
+
 			t.deepEqual(Object.keys(res), [
 				'id',
 				'title',
@@ -90,10 +89,51 @@ test('when Vimeo video found', t => {
 			t.is(res.title, videoResponse.name);
 			t.is(res.description, videoResponse.description);
 			t.is(res.images.length, videoResponse.pictures.sizes.length);
-			t.is(res.images[0].url, videoResponse.pictures.sizes[0].link);
-			t.is(res.sources.length, 3);
-			t.is(res.sources[0].url, videoConfigResponse.request.files.hls.url);
+			t.is(res.images[5].url, videoResponse.pictures.sizes[5].link);
+			t.is(res.sources.length, 4);
+
+			// sources (smallest SD)
+			t.is(source1.url, videoResponse.files[0].link_secure);
+			t.is(source1.label, `${videoResponse.files[0].quality}-${videoResponse.files[0].height}`);
+			t.is(source1.mimeType, videoResponse.files[0].type);
+			t.is(source1.width, videoResponse.files[0].width);
+			t.is(source1.height, videoResponse.files[0].height);
+			t.is(source1.container, videoResponse.files[0].type.split('/').pop());
+			t.is(source1.maxBitrate, 0);
+			// sources (HLS)
+			t.is(source4.url, videoResponse.files[3].link_secure);
+			t.is(source4.label, videoResponse.files[3].quality);
+			t.is(source4.mimeType, 'application/x-mpegURL');
+			t.is(source4.width, videoResponse.width);
+			t.is(source4.height, videoResponse.height);
+			t.is(source4.container, videoResponse.files[0].type.split('/').pop());
+			t.is(source4.maxBitrate, 0);
+
 			t.is(res.duration, 1000 * videoResponse.duration);
 			t.is(res.releaseDate, (new Date(videoResponse.release_time)).toISOString());
 		});
+});
+
+test('when video found from non pro/business account', t => {
+	const spec = {
+		channel: 'abc',
+		type: 'videoSpec',
+		id: `spec-vimeo-${nonProVideoResponse.uri}`,
+		video: {uri: nonProVideoResponse.uri}
+	};
+
+	const obs = new Promise(resolve => {
+		bus.observe({level: 'error'}, payload => {
+			resolve(payload);
+		});
+	});
+
+	t.throws(videoHandler({spec}), 'Not a Vimeo Pro or Business account');
+
+	return obs.then(event => {
+		t.deepEqual(event.error, {code: 'ACCOUNT_NOT_VALID'});
+		t.is(event.code, 'ACCOUNT_NOT_VALID');
+		t.deepEqual(event.spec, spec);
+		t.is(event.message, 'account not valid');
+	});
 });
