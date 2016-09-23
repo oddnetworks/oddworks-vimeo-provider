@@ -5,6 +5,7 @@ const nock = require('nock');
 const Promise = require('bluebird');
 
 const provider = require('../');
+const Client = require('../lib/client');
 const albumTransform = require('../lib/default-collection-transform');
 const albumResponse = require('./fixtures/album-response');
 const albumResponseLarge = require('./fixtures/album-response-large');
@@ -40,7 +41,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/4148058')
+		.get(`/me/albums/4148058?fields=${encodeURIComponent(Client.DEFAULT_ALBUM_FIELDS)}`)
 		.reply(200, albumResponse);
 
 	nock(
@@ -50,7 +51,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/4148058/videos')
+		.get(`/me/albums/4148058/videos?fields=${encodeURIComponent(Client.DEFAULT_VIDEO_FIELDS)}`)
 		.reply(200, videosByAlbumResponse);
 
 	nock(
@@ -60,7 +61,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/12345')
+		.get(`/me/albums/12345?fields=${encodeURIComponent(Client.DEFAULT_ALBUM_FIELDS)}`)
 		.reply(404);
 
 	nock(
@@ -70,7 +71,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/3333333')
+		.get(`/me/albums/3333333?fields=${encodeURIComponent(Client.DEFAULT_ALBUM_FIELDS)}`)
 		.reply(200, albumResponseLarge);
 
 	nock(
@@ -80,7 +81,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/3333333/videos?page=1')
+		.get(`/me/albums/3333333/videos?fields=${encodeURIComponent(Client.DEFAULT_VIDEO_FIELDS)}&page=1`)
 		.reply(200, videosByAlbumResponsePage1);
 
 	nock(
@@ -90,7 +91,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/3333333/videos?page=2')
+		.get(`/me/albums/3333333/videos?fields=${encodeURIComponent(Client.DEFAULT_VIDEO_FIELDS)}&page=2`)
 		.reply(200, videosByAlbumResponsePage2);
 
 	nock(
@@ -100,7 +101,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/3078903')
+		.get(`/me/albums/3078903?fields=${encodeURIComponent(Client.DEFAULT_ALBUM_FIELDS)}`)
 		.reply(200, nonProAlbumResponse);
 
 	nock(
@@ -110,7 +111,7 @@ test.before(() => {
 				authorization: authHeader
 			}
 		})
-		.get('/me/albums/3078903/videos')
+		.get(`/me/albums/3078903/videos?fields=${encodeURIComponent(Client.DEFAULT_VIDEO_FIELDS)}`)
 		.reply(200, nonProVideosByAlbumResponse);
 });
 

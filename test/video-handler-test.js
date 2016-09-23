@@ -5,6 +5,7 @@ const nock = require('nock');
 const Promise = require('bluebird');
 
 const provider = require('../');
+const Client = require('../lib/client');
 const videoTransform = require('../lib/default-video-transform');
 const videoResponse = require('./fixtures/video-response');
 const nonProVideoResponse = require('./fixtures/non-pro-video-response');
@@ -19,15 +20,15 @@ let videoHandler = null;
 
 test.before(() => {
 	nock('https://api.vimeo.com')
-		.get('/me/videos/166971134')
+		.get(`/me/videos/166971134?fields=${encodeURIComponent(Client.DEFAULT_VIDEO_FIELDS)}`)
 		.reply(200, videoResponse);
 
 	nock('https://api.vimeo.com')
-		.get('/me/videos/12345')
+		.get(`/me/videos/12345?fields=${encodeURIComponent(Client.DEFAULT_VIDEO_FIELDS)}`)
 		.reply(404);
 
 	nock('https://api.vimeo.com')
-		.get('/me/videos/108591077')
+		.get(`/me/videos/108591077?fields=${encodeURIComponent(Client.DEFAULT_VIDEO_FIELDS)}`)
 		.reply(200, nonProVideoResponse);
 });
 
