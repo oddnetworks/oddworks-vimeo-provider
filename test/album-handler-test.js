@@ -15,43 +15,101 @@ const nonProAlbumResponse = require('./fixtures/non-pro-album-response');
 const nonProVideosByAlbumResponse = require('./fixtures/non-pro-videos-by-album-response');
 const helpers = require('./helpers');
 
+const accessToken = '67832c5e-e2e6-4b3b-99bd-7b92a3863423';
+const authHeader = `Bearer ${accessToken}`;
+
 const getChannel = () => {
-	return Promise.resolve({id: 'abc'});
+	return Promise.resolve({
+		id: 'abc',
+		secrets: {
+			vimeo: {
+				accessToken
+			}
+		}
+	});
 };
 
 let bus;
 let albumHandler = null;
 
 test.before(() => {
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/4148058')
 		.reply(200, albumResponse);
 
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/4148058/videos')
 		.reply(200, videosByAlbumResponse);
 
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/12345')
 		.reply(404);
 
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/3333333')
 		.reply(200, albumResponseLarge);
 
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/3333333/videos?page=1')
 		.reply(200, videosByAlbumResponsePage1);
 
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/3333333/videos?page=2')
 		.reply(200, videosByAlbumResponsePage2);
 
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/3078903')
 		.reply(200, nonProAlbumResponse);
 
-	nock('https://api.vimeo.com')
+	nock(
+		'https://api.vimeo.com',
+		{
+			reqheaders: {
+				authorization: authHeader
+			}
+		})
 		.get('/me/albums/3078903/videos')
 		.reply(200, nonProVideosByAlbumResponse);
 });
