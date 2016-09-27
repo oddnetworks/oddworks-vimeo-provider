@@ -126,12 +126,6 @@ test.beforeEach(() => {
 	albumHandler = provider.createAlbumHandler(bus, getChannel, client, albumTransform);
 });
 
-test.afterEach(() => {
-	/* eslint-disable no-debugger */
-	debugger;
-	/* eslint-enable no-debugger */
-});
-
 test('when Vimeo album not found', t => {
 	const spec = {
 		channel: 'abc',
