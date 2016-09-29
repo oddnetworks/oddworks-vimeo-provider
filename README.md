@@ -2,6 +2,8 @@
 
 A Vimeo provider plugin for the Oddworks content server.
 
+[![Build Status](https://travis-ci.org/oddnetworks/oddworks-vimeo-provider.svg?branch=master)](https://travis-ci.org/oddnetworks/oddworks-vimeo-provider)
+
 Installation
 ------------
 Install the npm package as a Node.js library:
