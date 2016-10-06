@@ -43,7 +43,7 @@ test('when Vimeo video not found', t => {
 	const spec = {
 		channel: 'abc',
 		type: 'videoSpec',
-		id: 'spec-vimeo-/videos/12345',
+		id: 'spec-vimeo-video-12345',
 		video: {uri: '/videos/12345'}
 	};
 
@@ -53,21 +53,26 @@ test('when Vimeo video not found', t => {
 		});
 	});
 
-	t.throws(videoHandler({spec}), `Video not found for uri "${spec.video.uri}"`);
+	return videoHandler({spec}).catch(err => {
+		// test error condition
+		t.is(err.message, `Video not found for uri "${spec.video.uri}"`);
 
-	return obs.then(event => {
-		t.deepEqual(event.error, {code: 'VIDEO_NOT_FOUND'});
-		t.is(event.code, 'VIDEO_NOT_FOUND');
-		t.deepEqual(event.spec, spec);
-		t.is(event.message, 'video not found');
+		// test bus event
+		return obs.then(event => {
+			t.deepEqual(event.error, {code: 'VIDEO_NOT_FOUND'});
+			t.is(event.code, 'VIDEO_NOT_FOUND');
+			t.deepEqual(event.spec, spec);
+			t.is(event.message, 'video not found');
+		});
 	});
 });
 
 test('when Vimeo video found', t => {
+	const videoId = videoResponse.uri.split('/').pop();
 	const spec = {
 		channel: 'abc',
 		type: 'videoSpec',
-		id: `spec-vimeo-${videoResponse.uri}`,
+		id: `spec-vimeo-video-${videoId}`,
 		video: {uri: videoResponse.uri}
 	};
 
@@ -85,7 +90,7 @@ test('when Vimeo video found', t => {
 				'duration',
 				'releaseDate'
 			]);
-			t.is(res.id, `res-vimeo-${videoResponse.uri}`);
+			t.is(res.id, `res-vimeo-video-${videoId}`);
 			t.is(res.title, videoResponse.name);
 			t.is(res.description, videoResponse.description);
 			t.is(res.images.length, videoResponse.pictures.sizes.length);
@@ -115,10 +120,12 @@ test('when Vimeo video found', t => {
 });
 
 test('when video found from non pro/business account', t => {
+	const videoId = nonProVideoResponse.uri.split('/').pop();
+
 	const spec = {
 		channel: 'abc',
 		type: 'videoSpec',
-		id: `spec-vimeo-${nonProVideoResponse.uri}`,
+		id: `spec-vimeo-video-${videoId}`,
 		video: {uri: nonProVideoResponse.uri}
 	};
 
@@ -128,12 +135,16 @@ test('when video found from non pro/business account', t => {
 		});
 	});
 
-	t.throws(videoHandler({spec}), 'Not a Vimeo Pro or Business account');
+	return videoHandler({spec}).catch(err => {
+		// test error condition
+		t.is(err.message, 'Not a Vimeo Pro or Business account');
 
-	return obs.then(event => {
-		t.deepEqual(event.error, {code: 'ACCOUNT_NOT_VALID'});
-		t.is(event.code, 'ACCOUNT_NOT_VALID');
-		t.deepEqual(event.spec, spec);
-		t.is(event.message, 'account not valid');
+		// test bus event
+		return obs.then(event => {
+			t.deepEqual(event.error, {code: 'ACCOUNT_NOT_VALID'});
+			t.is(event.code, 'ACCOUNT_NOT_VALID');
+			t.deepEqual(event.spec, spec);
+			t.is(event.message, 'account not valid');
+		});
 	});
 });

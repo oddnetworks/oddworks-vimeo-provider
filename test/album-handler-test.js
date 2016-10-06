@@ -118,7 +118,8 @@ test.beforeEach(() => {
 	bus = helpers.createBus();
 
 	bus.commandHandler({role: 'catalog', cmd: 'setItemSpec'}, spec => {
-		return Promise.resolve({type: 'videoSpec', resource: `res-vimeo-${spec.video.uri}`});
+		const videoId = spec.video.uri.split('/').pop();
+		return Promise.resolve({type: 'videoSpec', resource: `res-vimeo-video-${videoId}`});
 	});
 
 	const client = provider.createClient({accessToken: 'foo'});
@@ -130,7 +131,7 @@ test('when Vimeo album not found', t => {
 	const spec = {
 		channel: 'abc',
 		type: 'collectionSpec',
-		id: 'spec-vimeo-/users/32180226/albums/12345',
+		id: 'spec-vimeo-album-12345',
 		album: {uri: '/users/32180226/albums/12345'}
 	};
 
@@ -140,21 +141,26 @@ test('when Vimeo album not found', t => {
 		});
 	});
 
-	t.throws(albumHandler({spec}), `Album not found for uri "${spec.album.uri}"`);
+	return albumHandler({spec}).catch(err => {
+		// test error condition
+		t.is(err.message, `Album not found for uri "${spec.album.uri}"`);
 
-	return obs.then(event => {
-		t.deepEqual(event.error, {code: 'ALBUM_NOT_FOUND'});
-		t.is(event.code, 'ALBUM_NOT_FOUND');
-		t.deepEqual(event.spec, spec);
-		t.is(event.message, 'album not found');
+		// test bus event
+		return obs.then(event => {
+			t.deepEqual(event.error, {code: 'ALBUM_NOT_FOUND'});
+			t.is(event.code, 'ALBUM_NOT_FOUND');
+			t.deepEqual(event.spec, spec);
+			t.is(event.message, 'album not found');
+		});
 	});
 });
 
 test('when Vimeo album found', t => {
+	const albumId = albumResponse.uri.split('/').pop();
 	const spec = {
 		channel: 'abc',
 		type: 'collectionSpec',
-		id: `spec-vimeo-${albumResponse.uri}`,
+		id: `spec-vimeo-album-${albumId}`,
 		album: {uri: albumResponse.uri}
 	};
 
@@ -167,21 +173,23 @@ test('when Vimeo album found', t => {
 				'images',
 				'relationships'
 			]);
-			t.is(res.id, `res-vimeo-${albumResponse.uri}`);
+			t.is(res.id, `res-vimeo-album-${albumId}`);
 			t.is(res.title, albumResponse.name);
 			t.is(res.description, albumResponse.description);
 			t.is(res.images.length, albumResponse.pictures.sizes.length);
 			t.is(res.images[0].url, albumResponse.pictures.sizes[0].link);
 			t.is(res.relationships.entities.data.length, videosByAlbumResponse.data.length);
-			t.is(res.relationships.entities.data[0].id, `res-vimeo-${videosByAlbumResponse.data[0].uri}`);
+			const videoId = videosByAlbumResponse.data[0].uri.split('/').pop();
+			t.is(res.relationships.entities.data[0].id, `res-vimeo-video-${videoId}`);
 		});
 });
 
 test('when Vimeo album with > 25 videos found', t => {
+	const albumId = albumResponseLarge.uri.split('/').pop();
 	const spec = {
 		channel: 'abc',
 		type: 'collectionSpec',
-		id: `spec-vimeo-${albumResponseLarge.uri}`,
+		id: `spec-vimeo-album-${albumId}`,
 		album: {uri: albumResponseLarge.uri}
 	};
 
@@ -194,20 +202,23 @@ test('when Vimeo album with > 25 videos found', t => {
 				'images',
 				'relationships'
 			]);
-			t.is(res.id, `res-vimeo-${albumResponseLarge.uri}`);
+
+			t.is(res.id, `res-vimeo-album-${albumId}`);
 			t.is(res.title, albumResponseLarge.name);
 			t.is(res.description, albumResponseLarge.description);
 			t.is(res.images.length, 0);
 			t.is(res.relationships.entities.data.length, (videosByAlbumResponsePage1.data.length + videosByAlbumResponsePage2.data.length));
-			t.is(res.relationships.entities.data[39].id, `res-vimeo-${videosByAlbumResponsePage2.data[14].uri}`);
+			const videoId = videosByAlbumResponsePage2.data[14].uri.split('/').pop();
+			t.is(res.relationships.entities.data[39].id, `res-vimeo-video-${videoId}`);
 		});
 });
 
 test('when Vimeo album from non-Pro/Business account found', t => {
+	const albumId = nonProAlbumResponse.uri.split('/').pop();
 	const spec = {
 		channel: 'abc',
 		type: 'collectionSpec',
-		id: `spec-vimeo-${nonProAlbumResponse.uri}`,
+		id: `spec-vimeo-album-${albumId}`,
 		album: {uri: nonProAlbumResponse.uri}
 	};
 
