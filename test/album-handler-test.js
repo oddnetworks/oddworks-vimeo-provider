@@ -190,7 +190,7 @@ test('when Vimeo album found', t => {
 			});
 			res.relationships.entities.data.forEach(identifier => {
 				const id = identifier.id.split('-').pop();
-				t.true(specIds.includes(`spec-vimeo-video-${id}`));
+				t.true(specIds.indexOf(`spec-vimeo-video-${id}`) > -1);
 			});
 		});
 });
@@ -226,7 +226,7 @@ test('when Vimeo album with > 25 videos found', t => {
 			});
 			res.relationships.entities.data.forEach(identifier => {
 				const id = identifier.id.split('-').pop();
-				t.true(specIds.includes(`spec-vimeo-video-${id}`));
+				t.true(specIds.indexOf(`spec-vimeo-video-${id}`) > -1);
 			});
 		});
 });
