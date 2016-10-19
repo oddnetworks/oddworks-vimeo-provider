@@ -32,6 +32,7 @@ const getChannel = () => {
 
 let bus;
 let albumHandler = null;
+const SPECS = [];
 
 test.before(() => {
 	nock(
@@ -116,9 +117,11 @@ test.before(() => {
 });
 
 test.beforeEach(() => {
+	SPECS.splice(0, SPECS.length);
 	bus = helpers.createBus();
 
 	bus.commandHandler({role: 'catalog', cmd: 'setItemSpec'}, spec => {
+		SPECS.push(spec);
 		const videoId = spec.video.uri.split('/').pop();
 		return Promise.resolve({type: 'videoSpec', resource: `res-vimeo-video-${videoId}`});
 	});
@@ -182,6 +185,13 @@ test('when Vimeo album found', t => {
 			t.is(res.relationships.entities.data.length, videosByAlbumResponse.data.length);
 			const videoId = videosByAlbumResponse.data[0].uri.split('/').pop();
 			t.is(res.relationships.entities.data[0].id, `res-vimeo-video-${videoId}`);
+			const specIds = SPECS.map(spec => {
+				return spec.id;
+			});
+			res.relationships.entities.data.forEach(identifier => {
+				const id = identifier.id.split('-').pop();
+				t.true(specIds.indexOf(`spec-vimeo-video-${id}`) > -1);
+			});
 		});
 });
 
@@ -211,6 +221,13 @@ test('when Vimeo album with > 25 videos found', t => {
 			t.is(res.relationships.entities.data.length, (videosByAlbumResponsePage1.data.length + videosByAlbumResponsePage2.data.length));
 			const videoId = videosByAlbumResponsePage2.data[14].uri.split('/').pop();
 			t.is(res.relationships.entities.data[39].id, `res-vimeo-video-${videoId}`);
+			const specIds = SPECS.map(spec => {
+				return spec.id;
+			});
+			res.relationships.entities.data.forEach(identifier => {
+				const id = identifier.id.split('-').pop();
+				t.true(specIds.indexOf(`spec-vimeo-video-${id}`) > -1);
+			});
 		});
 });
 
