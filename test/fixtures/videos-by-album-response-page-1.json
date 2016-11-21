@@ -17,6 +17,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:13+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/010101010/pictures/574967139",
         "active": true,
@@ -118,6 +119,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:12+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/020202020/pictures/574967159",
         "active": true,
@@ -219,6 +221,80 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:10+00:00",
+      "tags": [
+        {
+          "uri": "/tags/oddnetworks",
+          "name": "odd networks",
+          "tag": "odd networks",
+          "canonical": "oddnetworks",
+          "metadata": {
+            "connections": {
+              "videos": {
+                "uri": "/tags/oddnetworks/videos",
+                "options": [
+                  "GET"
+                ],
+                "total": 3
+              }
+            }
+          },
+          "resource_key": "bf05bf6d-5962-4b83-b394-df22161d1a45"
+        },
+        {
+          "uri": "/tags/oddworks",
+          "name": "oddworks",
+          "tag": "oddworks",
+          "canonical": "oddworks",
+          "metadata": {
+            "connections": {
+              "videos": {
+                "uri": "/tags/oddworks/videos",
+                "options": [
+                  "GET"
+                ],
+                "total": 3
+              }
+            }
+          },
+          "resource_key": "a28430a5-c8d4-46cd-a897-0a0083658ee3"
+        },
+        {
+          "uri": "/tags/ott",
+          "name": "ott",
+          "tag": "ott",
+          "canonical": "ott",
+          "metadata": {
+            "connections": {
+              "videos": {
+                "uri": "/tags/ott/videos",
+                "options": [
+                  "GET"
+                ],
+                "total": 752
+              }
+            }
+          },
+          "resource_key": "1c89b2eb-6a93-43f0-807c-26a86c30055b"
+        },
+        {
+          "uri": "/tags/streaming",
+          "name": "streaming",
+          "tag": "streaming",
+          "canonical": "streaming",
+          "metadata": {
+            "connections": {
+              "videos": {
+                "uri": "/tags/streaming/videos",
+                "options": [
+                  "GET"
+                ],
+                "total": 33922
+              }
+            }
+          },
+          "resource_key": "df28cb3e-1950-4d01-a34e-a2a07b10f383"
+        }
+      ],
       "pictures": {
         "uri": "/videos/030303030/pictures/574967107",
         "active": true,
@@ -320,6 +396,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:09+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/040404040/pictures/574967114",
         "active": true,
@@ -421,6 +498,7 @@
       "width": 540,
       "height": 360,
       "release_time": "2016-06-09T17:38:08+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/050505050/pictures/574967095",
         "active": true,
@@ -504,6 +582,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:07+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/060606060/pictures/574967086",
         "active": true,
@@ -605,6 +684,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:06+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/070707070/pictures/574967141",
         "active": true,
@@ -706,6 +786,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:04+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/080808080/pictures/574967031",
         "active": true,
@@ -807,6 +888,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:03+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/090909090/pictures/574967050",
         "active": true,
@@ -908,6 +990,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:02+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/101010101/pictures/574967104",
         "active": true,
@@ -1009,6 +1092,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:38:00+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/111111111/pictures/574967113",
         "active": true,
@@ -1110,6 +1194,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:37:59+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/121212121/pictures/574967043",
         "active": true,
@@ -1211,6 +1296,7 @@
       "width": 1920,
       "height": 1080,
       "release_time": "2016-06-09T17:37:58+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/131313131/pictures/574967106",
         "active": true,
@@ -1324,6 +1410,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:37:57+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/141414141/pictures/574967068",
         "active": true,
@@ -1425,6 +1512,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:37:55+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/151515151/pictures/574967088",
         "active": true,
@@ -1526,6 +1614,7 @@
       "width": 634,
       "height": 360,
       "release_time": "2016-06-09T17:37:53+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/161616161/pictures/574967029",
         "active": true,
@@ -1609,6 +1698,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:37:51+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/171717171/pictures/574967045",
         "active": true,
@@ -1710,6 +1800,7 @@
       "width": 634,
       "height": 360,
       "release_time": "2016-06-09T17:37:50+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/181818181/pictures/574967030",
         "active": true,
@@ -1793,6 +1884,7 @@
       "width": 704,
       "height": 400,
       "release_time": "2016-06-09T17:37:48+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/191919191/pictures/574967065",
         "active": true,
@@ -1876,6 +1968,7 @@
       "width": 704,
       "height": 400,
       "release_time": "2016-06-09T17:37:47+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/202020202/pictures/574967012",
         "active": true,
@@ -1959,6 +2052,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:37:45+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/212121212/pictures/574967004",
         "active": true,
@@ -2060,6 +2154,7 @@
       "width": 1280,
       "height": 720,
       "release_time": "2016-06-09T17:37:43+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/222222222/pictures/574966982",
         "active": true,
@@ -2161,6 +2256,7 @@
       "width": 634,
       "height": 360,
       "release_time": "2016-06-09T17:37:41+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/232323232/pictures/574967048",
         "active": true,
@@ -2244,6 +2340,7 @@
       "width": 704,
       "height": 400,
       "release_time": "2016-06-09T17:37:38+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/242424242/pictures/574966953",
         "active": true,
@@ -2327,6 +2424,7 @@
       "width": 704,
       "height": 400,
       "release_time": "2016-06-09T17:37:36+00:00",
+      "tags": [],
       "pictures": {
         "uri": "/videos/252525252/pictures/574967044",
         "active": true,
