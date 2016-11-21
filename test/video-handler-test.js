@@ -89,7 +89,10 @@ test('when Vimeo video found', t => {
 				'images',
 				'sources',
 				'duration',
-				'releaseDate'
+				'genres',
+				'cast',
+				'releaseDate',
+				'meta'
 			]);
 			t.is(res.id, `res-vimeo-video-${videoId}`);
 			t.is(res.title, videoResponse.name);
@@ -117,6 +120,7 @@ test('when Vimeo video found', t => {
 
 			t.is(res.duration, 1000 * videoResponse.duration);
 			t.is(res.releaseDate, (new Date(videoResponse.release_time)).toISOString());
+			t.deepEqual(res.meta, {tags: ['odd networks', 'oddworks', 'ott', 'streaming']});
 		});
 });
 

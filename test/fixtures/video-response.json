@@ -6,6 +6,80 @@
   "width": 1280,
   "height": 720,
   "release_time": "2016-05-17T14:55:08+00:00",
+  "tags": [
+    {
+      "uri": "/tags/oddnetworks",
+      "name": "odd networks",
+      "tag": "odd networks",
+      "canonical": "oddnetworks",
+      "metadata": {
+        "connections": {
+          "videos": {
+            "uri": "/tags/oddnetworks/videos",
+            "options": [
+              "GET"
+            ],
+            "total": 3
+          }
+        }
+      },
+      "resource_key": "bf05bf6d-5962-4b83-b394-df22161d1a45"
+    },
+    {
+      "uri": "/tags/oddworks",
+      "name": "oddworks",
+      "tag": "oddworks",
+      "canonical": "oddworks",
+      "metadata": {
+        "connections": {
+          "videos": {
+            "uri": "/tags/oddworks/videos",
+            "options": [
+              "GET"
+            ],
+            "total": 3
+          }
+        }
+      },
+      "resource_key": "a28430a5-c8d4-46cd-a897-0a0083658ee3"
+    },
+    {
+      "uri": "/tags/ott",
+      "name": "ott",
+      "tag": "ott",
+      "canonical": "ott",
+      "metadata": {
+        "connections": {
+          "videos": {
+            "uri": "/tags/ott/videos",
+            "options": [
+              "GET"
+            ],
+            "total": 752
+          }
+        }
+      },
+      "resource_key": "1c89b2eb-6a93-43f0-807c-26a86c30055b"
+    },
+    {
+      "uri": "/tags/streaming",
+      "name": "streaming",
+      "tag": "streaming",
+      "canonical": "streaming",
+      "metadata": {
+        "connections": {
+          "videos": {
+            "uri": "/tags/streaming/videos",
+            "options": [
+              "GET"
+            ],
+            "total": 33922
+          }
+        }
+      },
+      "resource_key": "df28cb3e-1950-4d01-a34e-a2a07b10f383"
+    }
+  ],
   "pictures": {
     "uri": "/videos/166971134/pictures/571218442",
     "active": true,
