@@ -60,8 +60,8 @@ exports.createAlbumHandler = (bus, getChannel, client, transform) => {
 	//	args.spec.album.uri
 	return args => {
 		const spec = args.spec;
-		const album = spec.album || {};
-		const albumUri = album.uri;
+		const collection = spec.album || {};
+		const albumUri = collection.uri;
 		const channelId = spec.channel;
 
 		if (!albumUri || typeof albumUri !== 'string') {
@@ -69,8 +69,6 @@ exports.createAlbumHandler = (bus, getChannel, client, transform) => {
 				'vimeo-album-provider spec.album.uri String is required'
 			);
 		}
-
-		const collection = args.object;
 
 		return getChannel(channelId).then(channel => {
 			return getCollection({spec, channel, collection, albumUri});
