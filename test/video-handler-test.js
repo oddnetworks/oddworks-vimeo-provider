@@ -83,7 +83,6 @@ test('when Vimeo video found', t => {
 			const source4 = res.sources[3];
 
 			t.deepEqual(Object.keys(res), [
-				'id',
 				'title',
 				'description',
 				'images',
@@ -94,7 +93,6 @@ test('when Vimeo video found', t => {
 				'releaseDate',
 				'meta'
 			]);
-			t.is(res.id, `res-vimeo-video-${videoId}`);
 			t.is(res.title, videoResponse.name);
 			t.is(res.description, videoResponse.description);
 			t.is(res.images.length, videoResponse.pictures.sizes.length);
@@ -121,6 +119,9 @@ test('when Vimeo video found', t => {
 			t.is(res.duration, 1000 * videoResponse.duration);
 			t.is(res.releaseDate, (new Date(videoResponse.release_time)).toISOString());
 			t.deepEqual(res.meta, {tags: ['odd networks', 'oddworks', 'ott', 'streaming']});
+		})
+		.catch(err => {
+			console.error(err.stack);
 		});
 });
 

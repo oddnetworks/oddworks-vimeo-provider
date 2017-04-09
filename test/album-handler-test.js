@@ -6,6 +6,7 @@ const Promise = require('bluebird');
 
 const provider = require('../');
 const Client = require('../lib/client');
+const util = require('../lib/util');
 const albumTransform = require('../lib/default-collection-transform');
 const albumResponse = require('./fixtures/album-response');
 const albumResponseLarge = require('./fixtures/album-response-large');
@@ -122,8 +123,8 @@ test.beforeEach(() => {
 
 	bus.commandHandler({role: 'catalog', cmd: 'setItemSpec'}, spec => {
 		SPECS.push(spec);
-		const videoId = spec.video.uri.split('/').pop();
-		return Promise.resolve({type: 'videoSpec', resource: `res-vimeo-video-${videoId}`});
+		const videoId = util.formatId(spec.video.uri);
+		return Promise.resolve({type: 'videoSpec', resource: `res-vimeo-${videoId}`});
 	});
 
 	const client = provider.createClient({accessToken: 'foo'});
@@ -164,7 +165,7 @@ test('when Vimeo album found', t => {
 	const spec = {
 		channel: 'abc',
 		type: 'collectionSpec',
-		id: `spec-vimeo-album-${albumId}`,
+		id: `spec-vimeo-${albumId}`,
 		album: {uri: albumResponse.uri}
 	};
 
@@ -172,28 +173,28 @@ test('when Vimeo album found', t => {
 		.then(res => {
 			t.deepEqual(Object.keys(res), [
 				'uri',
-				'id',
 				'title',
 				'description',
 				'images',
 				'relationships'
 			]);
 			t.is(res.uri, albumResponse.uri);
-			t.is(res.id, `res-vimeo-album-${albumId}`);
 			t.is(res.title, albumResponse.name);
 			t.is(res.description, albumResponse.description);
 			t.is(res.images.length, albumResponse.pictures.sizes.length);
 			t.is(res.images[0].url, albumResponse.pictures.sizes[0].link);
 			t.is(res.relationships.entities.data.length, videosByAlbumResponse.data.length);
 			const videoId = videosByAlbumResponse.data[0].uri.split('/').pop();
-			t.is(res.relationships.entities.data[0].id, `res-vimeo-video-${videoId}`);
+			t.is(res.relationships.entities.data[0].id, `res-vimeo-videos-${videoId}`);
 			const specIds = SPECS.map(spec => {
 				return spec.id;
 			});
 			res.relationships.entities.data.forEach(identifier => {
 				const id = identifier.id.split('-').pop();
-				t.true(specIds.indexOf(`spec-vimeo-video-${id}`) > -1);
+				t.true(specIds.indexOf(`spec-vimeo-abc-videos-${id}`) > -1);
 			});
+		}).catch(err => {
+			console.log(err.stack);
 		});
 });
 
@@ -210,7 +211,6 @@ test('when Vimeo album with > 25 videos found', t => {
 		.then(res => {
 			t.deepEqual(Object.keys(res), [
 				'uri',
-				'id',
 				'title',
 				'description',
 				'images',
@@ -218,19 +218,18 @@ test('when Vimeo album with > 25 videos found', t => {
 			]);
 
 			t.is(res.uri, albumResponseLarge.uri);
-			t.is(res.id, `res-vimeo-album-${albumId}`);
 			t.is(res.title, albumResponseLarge.name);
 			t.is(res.description, albumResponseLarge.description);
 			t.is(res.images.length, 0);
 			t.is(res.relationships.entities.data.length, (videosByAlbumResponsePage1.data.length + videosByAlbumResponsePage2.data.length));
 			const videoId = videosByAlbumResponsePage2.data[14].uri.split('/').pop();
-			t.is(res.relationships.entities.data[39].id, `res-vimeo-video-${videoId}`);
+			t.is(res.relationships.entities.data[39].id, `res-vimeo-videos-${videoId}`);
 			const specIds = SPECS.map(spec => {
 				return spec.id;
 			});
 			res.relationships.entities.data.forEach(identifier => {
 				const id = identifier.id.split('-').pop();
-				t.true(specIds.indexOf(`spec-vimeo-video-${id}`) > -1);
+				t.true(specIds.indexOf(`spec-vimeo-abc-videos-${id}`) > -1);
 			});
 		});
 });
