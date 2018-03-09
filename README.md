@@ -14,12 +14,12 @@ For full Vimeo API documentation see [developer.vimeo.com/api](https://developer
 
 Oddworks Server Integration
 ---------------------------
-The Oddworks-Vimeo provider is designed to be integrated with an Oddworks server [catalog](https://github.com/oddnetworks/oddworks/tree/master/lib/services/catalog), specifically as a [provider](https://github.com/oddnetworks/oddworks/tree/master/lib/services/catalog#providers). To initialize the plugin in your server:
+The Oddworks-Vimeo provider is designed to be integrated with an Oddworks server [catalog](https://gitlab.com/oddnetworks/oddworks/core/tree/master/lib/services/catalog), specifically as a [provider](https://gitlab.com/oddnetworks/oddworks/core/tree/master/lib/services/catalog#providers). To initialize the plugin in your server:
 
 ```JavaScript
 const vimeoProvider = require('oddworks-vimeo-provider');
 
-// See https://github.com/oddnetworks/oddworks/tree/master/lib/services/catalog#patterns
+// See https://gitlab.com/oddnetworks/oddworks/core/tree/master/lib/services/catalog#patterns
 // for more information regarding an Oddcast Bus.
 const bus = createMyOddcastBus();
 

@@ -1,6 +1,6 @@
 {
   "name": "oddworks-vimeo-provider",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "An Oddworks provider plugin for Vimeo APIs",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oddnetworks/oddworks-vimeo-provider.git"
+    "url": "git+https://gitlab.com/oddnetworks/oddworks/vimeo-provider.git"
   },
   "keywords": [
     "Oddworks",
@@ -22,9 +22,9 @@
   "author": "Odd Networks Inc.",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/oddnetworks/oddworks-vimeo-provider/issues"
+    "url": "https://gitlab.com/oddnetworks/oddworks/vimeo-provider/issues"
   },
-  "homepage": "https://github.com/oddnetworks/oddworks-vimeo-provider#readme",
+  "homepage": "https://gitlab.com/oddnetworks/oddworks/vimeo-provider#readme",
   "dependencies": {
     "bluebird": "^3.4.6",
     "boom": "^4.0.0",
