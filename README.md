@@ -2,7 +2,7 @@
 
 A Vimeo provider plugin for the Oddworks content server.
 
-[![Build Status](https://travis-ci.org/oddnetworks/oddworks-vimeo-provider.svg?branch=master)](https://travis-ci.org/oddnetworks/oddworks-vimeo-provider)
+[![pipeline status](https://gitlab.com/oddnetworks/oddworks/vimeo-provider/badges/master/pipeline.svg)](https://gitlab.com/oddnetworks/oddworks/vimeo-provider/commits/master)
 
 Installation
 ------------
