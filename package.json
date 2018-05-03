@@ -1,6 +1,6 @@
 {
   "name": "oddworks-vimeo-provider",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "An Oddworks provider plugin for Vimeo APIs",
   "main": "index.js",
   "scripts": {
